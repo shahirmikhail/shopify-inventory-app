@@ -25,7 +25,13 @@ The image repository is a Flask REST API which allows the user to post, retrieve
      <li>
       <a href="#usage">Usage</a>
       <ul>
-        <li><a href="#sample-payload">Sample Payload</a></li>
+        <li>
+          <a href="#sample-payloads">Sample Payloads</a>
+            <ul>
+              <li><a href="#post">POST</a></li>
+              <li><a href="#put">PUT</a></li>
+            </ul>
+        </li>
         <li><a href="#validation">Validation</a></li>
       </ul>
     </li>
