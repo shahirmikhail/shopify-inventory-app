@@ -69,10 +69,10 @@ The `requirements.txt` file contains all the necessary frameworks and libraries.
 ### Dev Environment
 - `python -v` 3.7 or greater
 - To clone the repo: `git clone https://github.com/shahirmikhail/shopify-image-repo.git`
-- Change the current working directory to the local project root and run (only required first time):
+- Change the current working directory to the local project root and run (only required for the first time):
     - Mac: `python3 -m venv venv`
     - Windows: `python -m venv venv`
-- To start the virtual env:
+- To start the virtual environment:
     - Mac: `source venv\bin\activate`
     - Windows: `source venv\scripts\activate`
 
@@ -105,7 +105,7 @@ Below is an example of a payload that the repo whould take for the PUT operation
   "id": "b2efff0a-38d6-4b02-8060-e7a0c03c0591",
   "name": "Cute Dog",
   "owner": "Shahir Mikhail",
-  "size": "300kb",
+  "size": "300 KB",
   "url": "https://picsum.photos/id/237/200/300"
 }
 ```
