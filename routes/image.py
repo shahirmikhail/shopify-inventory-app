@@ -3,6 +3,7 @@ from flask import jsonify, request, make_response
 from controller.get_image import *
 from controller.post_image import *
 from controller.put_image import *
+from controller.delete_image import *
 from api_exceptions import *
 from controller.validations import Validations
 
@@ -104,7 +105,16 @@ def image_id_api(image_id):
             return jsonify({'message': str(e)}), 406
 
     if request.method == 'DELETE':
-        return None
+        try:
+            response = delete_image(image_id)
+            if response['status_code'] == 200:
+                return jsonify({
+                    'message': response['message']
+                }), response['status_code']
+            elif response['status_code'] == 404:
+                return jsonify({'message': response['message']}), 404
+        except ApiException as e:
+            return jsonify({'message': str(e)}), 404
 
 
 @app.route('/api/test/images', methods=['GET'])
