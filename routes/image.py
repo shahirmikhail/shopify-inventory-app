@@ -2,6 +2,7 @@ from app import app
 from flask import jsonify, request, make_response
 from controller.get_image import *
 from controller.post_image import *
+from controller.put_image import *
 from api_exceptions import *
 from controller.validations import Validations
 
@@ -75,7 +76,32 @@ def image_id_api(image_id):
 
     if request.method == 'PUT':
         data = request.get_json()
-        return None
+        try:
+            validation = Validations(data)
+
+            validation.validate_payload_put()
+            error_messages = validation.get_error_messages()
+            if not (len(error_messages["Validation Error"]) == 0):
+                return jsonify({'message': validation.error_messages}), 406
+
+            validation.validate_put(data, image_id)
+            error_messages = validation.get_error_messages()
+            if not (len(error_messages["Validation Error"]) == 0):
+                return jsonify({'message': validation.error_messages}), 406
+
+            response = put_image(data, image_id)
+            if response['status_code'] == 200:
+                return jsonify({
+                    'message': response['message']
+                }), response['status_code']
+            elif response['status_code'] == 404:
+                return jsonify({'message': response['message']}), 404
+            elif response['status_code'] == 400:
+                return jsonify({'message': response['message']}), 400
+            elif response['status_code'] == 406:
+                return jsonify({'message': response['message']}), 406
+        except ApiException as e:
+            return jsonify({'message': str(e)}), 406
 
     if request.method == 'DELETE':
         return None
