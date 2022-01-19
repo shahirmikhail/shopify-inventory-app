@@ -9,9 +9,9 @@ class Validations:
         self.keys_list = payload.keys()
 
     def validate_payload(self):
-        if 'collection' not in self.keys_list:
-            error_message = {"Field": "collection", "Message": "Missing field."}
-            self.error_messages["Validation Error"].append(error_message)
+        # if 'collection' not in self.keys_list:
+        #     error_message = {"Field": "collection", "Message": "Missing field."}
+        #     self.error_messages["Validation Error"].append(error_message)
         if 'name' not in self.keys_list:
             error_message = {"Field": "name", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
@@ -23,9 +23,9 @@ class Validations:
             self.error_messages["Validation Error"].append(error_message)
 
     def validate_payload_put(self):
-        if 'collection' not in self.keys_list:
-            error_message = {"Field": "collection", "Message": "Missing field."}
-            self.error_messages["Validation Error"].append(error_message)
+        # if 'collection' not in self.keys_list:
+        #     error_message = {"Field": "collection", "Message": "Missing field."}
+        #     self.error_messages["Validation Error"].append(error_message)
         if 'name' not in self.keys_list:
             error_message = {"Field": "name", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
@@ -44,44 +44,44 @@ class Validations:
 
     def validate(self, payload):
         name = payload["name"]
-        collection = payload["collection"]
+        # collection = payload["collection"]
         quantity = payload["quantity"]
         in_stock = payload["in_stock"]
 
         self.validate_empty_field(name, "name")
-        self.validate_empty_field(collection, "collection")
+        # self.validate_empty_field(collection, "collection")
         self.validate_empty_field(quantity, "quantity")
         self.validate_empty_field(in_stock, "in_stock")
 
         self.validate_string(name, "name")
-        self.validate_string(collection, "collection")
+        # self.validate_string(collection, "collection")
 
-        self.validate_collection(collection)
+        # self.validate_collection(collection)
         self.validate_name(name)
         self.validate_quantity(quantity)
         self.validate_in_stock(in_stock)
 
     def validate_put(self, payload, uri_id):
         name = payload["name"]
-        collection = payload["collection"]
+        # collection = payload["collection"]
         quantity = payload["quantity"]
         in_stock = payload["in_stock"]
         date_created = payload["date_created"]
         id = payload["id"]
 
         self.validate_empty_field(name, "name")
-        self.validate_empty_field(collection, "collection")
+        # self.validate_empty_field(collection, "collection")
         self.validate_empty_field(quantity, "quantity")
         self.validate_empty_field(in_stock, "in_stock")
         self.validate_empty_field(date_created, "date_created")
         self.validate_empty_field(id, "id")
 
         self.validate_string(name, "name")
-        self.validate_string(collection, "collection")
+        # self.validate_string(collection, "collection")
         self.validate_string(date_created, "date_created")
         self.validate_string(id, "id")
 
-        self.validate_collection(collection)
+        # self.validate_collection(collection)
         self.validate_name(name)
         self.validate_quantity(quantity)
         self.validate_in_stock(in_stock)
@@ -154,8 +154,8 @@ class Validations:
             self.error_messages["Validation Error"].append(error_message)
 
     def validate_string_length_min(self, field, field_name):
-        if len(field) < 5:
-            error_message = {"Field": field_name, "Message": "Field must contain at least 5 characters."}
+        if len(field) < 3:
+            error_message = {"Field": field_name, "Message": "Field must contain at least 3 characters."}
             self.error_messages["Validation Error"].append(error_message)
 
     def validate_string_length_max(self, field, field_name):

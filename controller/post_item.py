@@ -12,7 +12,6 @@ def post_items(payload):
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
     name = payload["name"]
-    collection = payload["collection"]
     quantity = payload["quantity"]
     in_stock = payload["in_stock"]
     date_created = dt_string
@@ -28,15 +27,28 @@ def post_items(payload):
             if item["id"] == id:
                 return {"message": 'Item already exists', "status_code": 406}
 
-    table.put_item(
-        Item={
-            "name": name,
-            "collection": collection,
-            "quantity": quantity,
-            "in_stock": in_stock,
-            "date_created": date_created,
-            "date_updated": date_updated,
-            "id": str(id)
-        }
-    )
+    if 'collection' in payload.keys():
+        collection = payload["collection"]
+        table.put_item(
+            Item={
+                "name": name,
+                "collection": collection,
+                "quantity": quantity,
+                "in_stock": in_stock,
+                "date_created": date_created,
+                "date_updated": date_updated,
+                "id": str(id)
+            }
+        )
+    else:
+        table.put_item(
+            Item={
+                "name": name,
+                "quantity": quantity,
+                "in_stock": in_stock,
+                "date_created": date_created,
+                "date_updated": date_updated,
+                "id": str(id)
+            }
+        )
     return {"message": 'Item created successfully', "status_code": 201}
