@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/shahirmikhail/Development/Shopify/shopify-image-repo/venv"
+VIRTUAL_ENV="/Users/shahirmikhail/Development/Shopify2022/shopify-inventory-app/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

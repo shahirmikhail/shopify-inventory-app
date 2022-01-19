@@ -1,41 +1,46 @@
 from app import app
 from flask import jsonify, request, make_response
-from controller.get_image import *
-from controller.post_image import *
-from controller.put_image import *
-from controller.delete_image import *
+from controller.get_item import *
+from controller.post_item import *
+from controller.put_item import *
+from controller.delete_item import *
 from api_exceptions import *
 from controller.validations import Validations
 
 """
-Image API
-    - GET: returns all images in the DB
+Inventory API
+    - GET: returns all items in the DB
         - if successful, status code: 200 (OK)
-        - if no images are found, returns and empty payload, status code: 404 (NOT FOUND)
+        - if no items are found, returns and empty payload, status code: 404 (NOT FOUND)
         
-    - POST: creates and adds image to the DB, generates image ID
+    - POST: creates and adds items to the DB, generates item ID
         - if successful, status code: 201 (CREATED)
         - if information in payload is missing, status code: 406 (NOT ACCEPTABLE)
-        - if image already exists in DB, status code: 406 (NOT ACCEPTABLE)
+        - if item already exists in DB, status code: 406 (NOT ACCEPTABLE)
         - if schema error, return 400 (BAD REQUEST)
         
-    - PUT: modifies an image in the DB given an image ID
+    - PUT: modifies an item in the DB given an item ID
         - if successful, status code: 200 (OK)
-        - if image not found, status code: 404 (NOT FOUND)
+        - if item not found, status code: 404 (NOT FOUND)
         - if information in payload is missing, status code: 406 (NOT ACCEPTABLE)
         - if schema error, return 400 (BAD REQUEST)
         
-    - DELETE: deletes an image from the DB given an image ID
+    - DELETE: deletes an item from the DB given an item ID
         - if successful, status code: 200 (OK)
-        - if image not found, status code: 404 (NOT FOUND)
+        - if item not found, status code: 404 (NOT FOUND)
 """
 
 
-@app.route('/api/images', methods=['POST', 'GET'])
-def image_api():
+@app.route('/api/items', methods=['POST', 'GET'])
+def inventory_api():
     if request.method == 'GET':
-        images = get_all_images()
-        response = make_response(jsonify(images), 200)
+        collection = request.args.get('collection')
+        if collection is not None:
+            items = get_item_by_collection(collection)
+            response = make_response(jsonify(items), 200)
+            return response
+        items = get_all_items()
+        response = make_response(jsonify(items), 200)
         return response
 
     if request.method == 'POST':
@@ -53,7 +58,7 @@ def image_api():
             if not(len(error_messages["Validation Error"]) == 0):
                 return jsonify({'message': validation.error_messages}), 406
 
-            response = post_images(data)
+            response = post_items(data)
             if response['status_code'] == 201:
                 return jsonify({
                     'message': response['message']
@@ -66,10 +71,10 @@ def image_api():
             return jsonify({'message': str(e)}), 406
 
 
-@app.route('/api/images/<image_id>', methods=['GET', 'PUT', 'DELETE'])
-def image_id_api(image_id):
+@app.route('/api/items/<item_id>', methods=['GET', 'PUT', 'DELETE'])
+def item_id_api(item_id):
     if request.method == 'GET':
-        response = get_image_by_id(image_id)
+        response = get_item_by_id(item_id)
         if response['status_code'] == 200:
             return jsonify(response['message']), response['status_code']
         else:
@@ -85,12 +90,12 @@ def image_id_api(image_id):
             if not (len(error_messages["Validation Error"]) == 0):
                 return jsonify({'message': validation.error_messages}), 406
 
-            validation.validate_put(data, image_id)
+            validation.validate_put(data, item_id)
             error_messages = validation.get_error_messages()
             if not (len(error_messages["Validation Error"]) == 0):
                 return jsonify({'message': validation.error_messages}), 406
 
-            response = put_image(data, image_id)
+            response = put_item(data, item_id)
             if response['status_code'] == 200:
                 return jsonify({
                     'message': response['message']
@@ -106,7 +111,7 @@ def image_id_api(image_id):
 
     if request.method == 'DELETE':
         try:
-            response = delete_image(image_id)
+            response = delete_item(item_id)
             if response['status_code'] == 200:
                 return jsonify({
                     'message': response['message']
@@ -117,6 +122,6 @@ def image_id_api(image_id):
             return jsonify({'message': str(e)}), 404
 
 
-@app.route('/api/test/images', methods=['GET'])
-def test_image_api():
-    return jsonify({'message': 'Image API is up and running.'}), 200
+@app.route('/api/test/items', methods=['GET'])
+def test_item_api():
+    return jsonify({'message': 'Item API is up and running.'}), 200

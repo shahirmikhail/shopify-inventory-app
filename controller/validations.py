@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class Validations:
 
     def __init__(self, payload=None):
@@ -6,100 +9,84 @@ class Validations:
         self.keys_list = payload.keys()
 
     def validate_payload(self):
-        if 'extension' not in self.keys_list:
-            error_message = {"Field": "extension", "Message": "Missing field."}
+        if 'collection' not in self.keys_list:
+            error_message = {"Field": "collection", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
         if 'name' not in self.keys_list:
             error_message = {"Field": "name", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
-        if 'owner' not in self.keys_list:
-            error_message = {"Field": "owner", "Message": "Missing field."}
+        if 'quantity' not in self.keys_list:
+            error_message = {"Field": "quantity", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
-        if 'size' not in self.keys_list:
-            error_message = {"Field": "size", "Message": "Missing field."}
-            self.error_messages["Validation Error"].append(error_message)
-        if 'url' not in self.keys_list:
-            error_message = {"Field": "url", "Message": "Missing field."}
+        if 'in_stock' not in self.keys_list:
+            error_message = {"Field": "in_stock", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
 
     def validate_payload_put(self):
-        if 'extension' not in self.keys_list:
-            error_message = {"Field": "extension", "Message": "Missing field."}
+        if 'collection' not in self.keys_list:
+            error_message = {"Field": "collection", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
         if 'name' not in self.keys_list:
             error_message = {"Field": "name", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
-        if 'owner' not in self.keys_list:
-            error_message = {"Field": "owner", "Message": "Missing field."}
+        if 'quantity' not in self.keys_list:
+            error_message = {"Field": "quantity", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
-        if 'size' not in self.keys_list:
-            error_message = {"Field": "size", "Message": "Missing field."}
+        if 'in_stock' not in self.keys_list:
+            error_message = {"Field": "in_stock", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
-        if 'url' not in self.keys_list:
-            error_message = {"Field": "url", "Message": "Missing field."}
+        if 'date_created' not in self.keys_list:
+            error_message = {"Field": "date_created", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
         if 'id' not in self.keys_list:
             error_message = {"Field": "id", "Message": "Missing field."}
             self.error_messages["Validation Error"].append(error_message)
 
     def validate(self, payload):
-        extension = payload["extension"]
         name = payload["name"]
-        owner = payload["owner"]
-        size = payload["size"]
-        url = payload["url"]
+        collection = payload["collection"]
+        quantity = payload["quantity"]
+        in_stock = payload["in_stock"]
 
-        self.validate_empty_field(extension, "extension")
         self.validate_empty_field(name, "name")
-        self.validate_empty_field(owner, "owner")
-        self.validate_empty_field(size, "size")
-        self.validate_empty_field(url, "url")
+        self.validate_empty_field(collection, "collection")
+        self.validate_empty_field(quantity, "quantity")
+        self.validate_empty_field(in_stock, "in_stock")
 
-        self.validate_string(extension, "extension")
         self.validate_string(name, "name")
-        self.validate_string(owner, "owner")
-        self.validate_string(size, "size")
-        self.validate_string(url, "url")
+        self.validate_string(collection, "collection")
 
-        self.validate_extension(extension)
+        self.validate_collection(collection)
         self.validate_name(name)
-        self.validate_owner(owner)
-        self.validate_size(size)
+        self.validate_quantity(quantity)
+        self.validate_in_stock(in_stock)
 
     def validate_put(self, payload, uri_id):
-        extension = payload["extension"]
         name = payload["name"]
-        owner = payload["owner"]
-        size = payload["size"]
-        url = payload["url"]
+        collection = payload["collection"]
+        quantity = payload["quantity"]
+        in_stock = payload["in_stock"]
+        date_created = payload["date_created"]
         id = payload["id"]
 
-        self.validate_empty_field(extension, "extension")
         self.validate_empty_field(name, "name")
-        self.validate_empty_field(owner, "owner")
-        self.validate_empty_field(size, "size")
-        self.validate_empty_field(url, "url")
+        self.validate_empty_field(collection, "collection")
+        self.validate_empty_field(quantity, "quantity")
+        self.validate_empty_field(in_stock, "in_stock")
+        self.validate_empty_field(date_created, "date_created")
         self.validate_empty_field(id, "id")
 
-        self.validate_string(extension, "extension")
         self.validate_string(name, "name")
-        self.validate_string(owner, "owner")
-        self.validate_string(size, "size")
-        self.validate_string(url, "url")
+        self.validate_string(collection, "collection")
+        self.validate_string(date_created, "date_created")
         self.validate_string(id, "id")
 
-        self.validate_extension(extension)
+        self.validate_collection(collection)
         self.validate_name(name)
-        self.validate_owner(owner)
-        self.validate_size(size)
-        self.validate_image_id(id, uri_id)
-
-    def validate_extension(self, extension):
-        valid_extensions = ["JPEG", "JPG", "PNG", "GIF", "TIFF", "PSD", "PDF", "EPS", "AI", "INDD", "RAW"]
-        if extension not in valid_extensions:
-            error_message = {"Field": "extension", "Message": "Invalid extension."}
-            self.error_messages["Validation Error"].append(error_message)
-        return None
+        self.validate_quantity(quantity)
+        self.validate_in_stock(in_stock)
+        self.validate_date(date_created, "date_created")
+        self.validate_item_id(id, uri_id)
 
     def validate_name(self, name):
         self.validate_alphanumeric(name, "name")
@@ -107,25 +94,21 @@ class Validations:
         self.validate_string_length_max(name, "name")
         return None
 
-    def validate_owner(self, owner):
-        self.validate_alphanumeric(owner, "owner")
-        self.validate_string_length_min(owner, "owner")
-        self.validate_string_length_max(owner, "owner")
+    def validate_collection(self, collection):
+        self.validate_alphanumeric(collection, "collection")
+        self.validate_string_length_min(collection, "collection")
+        self.validate_string_length_max(collection, "collection")
         return None
 
-    def validate_size(self, size):
-        valid_sizes = ["KB", "MB", "GB", "TB"]
-        size_list = size.split(" ")
-        if len(size_list) != 2:
-            error_message = {"Field": "size", "Message": "Invalid format."}
-            self.error_messages["Validation Error"].append(error_message)
-            return None
-        if (size_list[0].isnumeric() is False) or (size_list[1] not in valid_sizes):
-            error_message = {"Field": "size", "Message": "Invalid format."}
-            self.error_messages["Validation Error"].append(error_message)
+    def validate_quantity(self, quantity):
+        self.validate_number(quantity, "quantity")
         return None
 
-    def validate_image_id(self, payload_id, uri_id):
+    def validate_in_stock(self, in_stock):
+        self.validate_boolean(in_stock, "in_stock")
+        return None
+
+    def validate_item_id(self, payload_id, uri_id):
         if payload_id != uri_id:
             error_message = {"Field": "id", "Message": "Id from uri does not match the one from the payload."}
             self.error_messages["Validation Error"].append(error_message)
@@ -136,9 +119,28 @@ class Validations:
             error_message = {"Field": field_name, "Message": "Empty field."}
             self.error_messages["Validation Error"].append(error_message)
 
+    def validate_date(self, date, date_name):
+        date_format = "%d/%m/%Y %H:%M:%S"
+        try:
+            datetime.strptime(date, date_format)
+        except ValueError:
+            error_message = {"Field": date_name, "Message": "Wrong date format."}
+            self.error_messages["Validation Error"].append(error_message)
+        return None
+
     def validate_string(self, field, field_name):
-        if not(type(field) == str):
+        if not (type(field) == str):
             error_message = {"Field": field_name, "Message": "Field must be a string."}
+            self.error_messages["Validation Error"].append(error_message)
+
+    def validate_number(self, field, field_name):
+        if not (type(field) == int):
+            error_message = {"Field": field_name, "Message": "Field must be an integer."}
+            self.error_messages["Validation Error"].append(error_message)
+
+    def validate_boolean(self, field, field_name):
+        if not (type(field) == bool):
+            error_message = {"Field": field_name, "Message": "Field must be a boolean."}
             self.error_messages["Validation Error"].append(error_message)
 
     def validate_alphanumeric(self, field, field_name):
@@ -168,4 +170,3 @@ class Validations:
 
     def get_error_messages(self):
         return self.error_messages
-

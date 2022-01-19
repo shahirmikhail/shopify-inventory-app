@@ -1,4 +1,4 @@
-#!/Users/shahirmikhail/Development/Shopify/shopify-image-repo/venv/bin/python
+#!/Users/shahirmikhail/Development/Shopify2022/shopify-inventory-app/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
