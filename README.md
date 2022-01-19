@@ -31,7 +31,9 @@ The feature chosen is to allow users to assign/remove inventory items to a named
           <a href="#sample-payloads-and-uris">Sample Payloads and URIs</a>
             <ul>
               <li><a href="#post">POST</a></li>
+              <li><a href="#get">GET</a></li>
               <li><a href="#put">PUT</a></li>
+              <li><a href="#delete">DELETE</a></li>
             </ul>
         </li>
         <li><a href="#validation">Validation</a></li>
