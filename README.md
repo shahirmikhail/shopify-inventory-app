@@ -78,8 +78,9 @@ The `requirements.txt` file contains all the necessary frameworks and libraries.
     - Mac: `python3 -m venv venv`
     - Windows: `python -m venv venv`
 - To start the virtual environment:
-    - Mac: `source venv\bin\activate`
-    - Windows: `source venv\scripts\activate`
+    - Mac: `source venv/bin/activate`
+    - Windows: `source venv/scripts/activate`
+- To deactivate the virtual environment: `deactivate`
 - To run the app: `python3 app.py`
 
 <!-- USAGE EXAMPLES -->
