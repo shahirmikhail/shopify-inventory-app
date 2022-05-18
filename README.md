@@ -82,6 +82,7 @@ The `requirements.txt` file contains all the necessary frameworks and libraries.
     - Windows: `source venv/scripts/activate`
 - To deactivate the virtual environment: `deactivate`
 - To run the app: `python3 app.py`
+- To run all the tests: `pytest`
 
 <!-- USAGE EXAMPLES -->
 ## Usage
