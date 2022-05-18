@@ -41,7 +41,7 @@ VIRTUAL_ENV="/Users/shahirmikhail/Development/Shopify2022/shopify-inventory-app/
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
-PATH="$VIRTUAL_ENV/bin:$PATH"
+PATH="$VIRTUAL_ENV/lib:$PATH"
 export PATH
 
 # unset PYTHONHOME if set
